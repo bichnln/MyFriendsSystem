@@ -1,3 +1,4 @@
+
 <?php 
     $host = "feenix-mariadb.swin.edu.au";
     $user = "s101668056";
@@ -11,5 +12,4 @@
     } else {
         echo "Connect successfully!";
     }
-    
 ?>
