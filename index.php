@@ -51,9 +51,6 @@
         } else {
             echo "<p>Error creating table: " . $conn->error . "</p>";
         }
-
-    
-    
     ?>
 </body>
 </html>
