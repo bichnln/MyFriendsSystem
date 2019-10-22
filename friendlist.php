@@ -65,7 +65,7 @@
                 echo "<input type='hidden' name='deleted_id' value='" . $friendlist[$i]['ID'] . "'/>";
                 echo "<tr><td>" . $friendlist[$i]['ID'] . "</td>" 
                     . "<td>" . $friendlist[$i]['Name'] . "</td>"
-                    . "<td>" . "<input type='submit' name'deleted' value = 'Unfriend'/></td>";
+                    . "<td>" . "<input type='submit' name='deleted' value = 'Unfriend'/></td>";
                 echo "</form>";
             }
             echo "</table>";
