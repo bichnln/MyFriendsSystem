@@ -93,11 +93,12 @@
                 
                 if ($result = $conn->query($sql)) {
                     echo "<p>Data successfully added to database!</p>";
+                    //$result->free();
                 } 
                 else {
                     echo "<p>Error: " . $conn->error . "</p>";
                 }
-                $result->free();
+                
                 $conn->close();
 
                 $_SESSION['login'] = "yes";

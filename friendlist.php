@@ -34,6 +34,15 @@
             if (!$result = $conn->query($unfriendSQL)) {
                 echo "<p>Error occured: " . $conn->erro . "</p>";
             }
+            $num_of_friends = $num_of_friends - 1;
+            $update_num_of_friends = "UPDATE friends 
+                                      SET num_of_friends = '" . $num_of_friends . "' 
+                                      WHERE friend_id = '" . $id . "';";
+            if (!$result = $conn->query($update_num_of_friends)) {
+                echo "<p>Error: " . $conn->error . "</p>";
+            } else {
+                echo "<p>updated number of friends!</p>";
+            }
         } else {
             echo "<p>deleted not set!</p>";
         }

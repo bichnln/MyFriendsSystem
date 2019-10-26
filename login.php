@@ -38,24 +38,28 @@
 </body>
 <?php 
     require_once("functions/validation_functions.php");
-
-    $err = "";
-    if ((isset($_POST['email']))  && (isset($_POST['password']))) {
-        if (empty_check($_POST['email'])) {
-            $err = $err . "<p>Email is empty!</p>";
-        }
-
-        if ($err == "") {
-            if (password_check($_POST['password'], $_POST['email'])) {
-                $_SESSION['login'] = "yes";
-                $_SESSION['user'] = $email;
-                header("location:friendlist.php");
-            } else {
-                echo "<p>Email does not exist or wrong password!</p>";
+    if (isset($_SESSION['user']) && ($_SESSION['user'] !== null)) {
+        header("location: friendlist.php");
+    } else {
+        $err = "";
+        if ((isset($_POST['email']))  && (isset($_POST['password']))) {
+            if (empty_check($_POST['email'])) {
+                $err = $err . "<p>Email is empty!</p>";
             }
-        } else {
-            echo $err;
+
+            if ($err == "") {
+                if (password_check($_POST['password'], $_POST['email'])) {
+                    $_SESSION['login'] = "yes";
+                    $_SESSION['user'] = $email;
+                    header("location:friendlist.php");
+                } else {
+                    echo "<p>Email does not exist or wrong password!</p>";
+                }
+            } else {
+                echo $err;
+            }
         }
     }
+    
 ?>
 </html>
