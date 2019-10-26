@@ -17,10 +17,21 @@
         require_once("functions/settings.php");
         global $conn;
         $id;
+        $pageno;
+        $no_records = 5;
         $friendsuggestion = array(array());
         array_pop($friendsuggestion);
 
         echo "<p>" . $_SESSION['user'] . "</p>";
+
+        if (isset($_GET['pageno'])) {
+            $pageno = $_GET['pageno'];
+        } else {
+            $pageno = 1;
+        }
+
+        $offset = ($pageno -1) * $no_records;
+
         $sql = "SELECT * FROM friends WHERE friend_email = '" . $_SESSION['user'] . "'; ";
 
         if ($result = $conn->query($sql)) {
@@ -29,7 +40,6 @@
                 $id = $row['friend_id'];
                 $profile = $row['profile_name'];
                 $email = $row['friend_email'];
-                $date_started = $row['date_started'];
                 $num_of_friends = $row['num_of_friends'];      
             }
             $result->free();
@@ -74,25 +84,28 @@
                                     
         if ($result = $conn->query($friends_suggested)) {
             if ($result->num_rows > 0 ) {
-                while ($row = $result->fetch_assoc()) {
-                    array_push($friendsuggestion, $row);
+                    $total_rows = $result->num_rows;
+                    $total_pages = ceil($total_rows / $no_records);
+
+                    $sql = "SELECT * FROM friends 
+                            WHERE friend_id NOT IN (
+                                SELECT friend_id1 FROM myfriends
+                                WHERE (myfriends.friend_id1 = '" . $id . "' OR myfriends.friend_id2 = '" . $id . "')
+                                ) LIMIT  $offset, $no_records ; ";
+
+                    $res_data = $conn->query($sql);
+                    print_r($conn->error);
+                    while ($row = $res_data->fetch_assoc()) {
+                        array_push($friendsuggestion, $row);
+                    }
                 }
-            }
-            $result->free();
+                $result->free();
         } else {
             echo "<p>Error: " . $conn->error . "</p>";
         }
 
         if (count($friendsuggestion) > 0) {
-            // TODO: check here
-            /**
-             * SELECT count(*) as mutuals FROM (
-                    *SELECT friend_id2, count(*) as occurences FROM myfriends
-                    *WHERE (friend_id1 = 1 OR friend_id1 = 4) 
-                    *GROUP BY friend_id2) src
-                *WHERE occurences > 1;
-    	
-             */
+           
             for ($i = 0; $i < count($friendsuggestion); $i++) {
                 $mutualfriendSQL = "SELECT count(*) as num_of_mutuals FROM (
                                         SELECT friend_id2, count(*) as occurences FROM myfriends
@@ -121,12 +134,19 @@
                 echo "</table>";
         }  else {
                 echo "<p>No friend suggestion!</p>";
-        }
-
-             
-      
+        }  
          
     ?>
+    <ul class="pagination">
+        <li><a href="?pageno=1">First</a></li>
+        <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
+            <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+        </li>
+        <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+            <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+        </li>
+        <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+    </ul>
     <p><a href="logout.php">Logout</a></p>
     <p><a href='index.php'>Home Page></a></p>
     <p><a href="friendlist.php">Friend List</a></p>
