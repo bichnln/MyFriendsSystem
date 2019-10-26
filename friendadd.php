@@ -1,3 +1,69 @@
+    <?php 
+        session_start();
+
+        require_once("functions/settings.php");
+        require_once("functions/validation_functions.php");
+
+        if (!(isset($_SESSION['user']) && $_SESSION['user'] !== null)) {
+           echo "<p>Error 404</p>";
+        } else {
+            global $conn;
+            $id;
+            $pageno;
+            $total_pages = 0;
+            $no_records = 5;
+            $friendsuggestion = array(array());
+            array_pop($friendsuggestion);
+
+
+            if (isset($_GET['pageno'])) {
+                $pageno = $_GET['pageno'];
+            } else {
+                $pageno = 1;
+            }
+
+            $offset = ($pageno -1) * $no_records;
+
+            $user_profile = fetch_profile($_SESSION['user']);
+            $id = $user_profile['friend_id'];
+            $no_friends = $user_profile['num_of_friends'];
+            echo "<h1 class='page_header'>My Friend System</h1>";
+            
+            if (isset($_GET['added_id'])) {
+                $added_id = $_GET['added_id'];
+                    if (!relationship_exist($id, $added_id)) {
+                        $addMsg = add_friend($id, $added_id);
+                        echo $addMsg;
+                    } 
+            } 
+            echo "<p>Number of friends: " . $no_friends . "</p>";
+            $no_friends = $user_profile['num_of_friends'];
+
+            $friendsuggestion = friend_suggestion($id, $offset, $no_records, $total_pages);
+
+            echo "<p>Total pages: $total_pages</p>";
+            
+
+            if (count($friendsuggestion) > 0) {
+                for ($i = 0; $i < count($friendsuggestion); $i++) {
+                    $friendsuggestion[$i]['num_of_mutuals'] = count_mutualfriends($id, $friendsuggestion[$i]['friend_id']);
+                }
+                
+                echo "<table border='1px'>";
+                    for ($i = 0; $i < count($friendsuggestion); $i++) {
+                        echo "<form action='friendadd.php' method='GET'>";
+                        echo "<input type='hidden' name='added_id' value='" . $friendsuggestion[$i]['friend_id'] . "'/>";
+                        echo "<tr><td>" . $friendsuggestion[$i]['profile_name'] . "</td>"
+                        . "<td>" . $friendsuggestion[$i]['num_of_mutuals'] . " mutual friend(s)" . "</td>"
+                        . "<td>" .  "<input type='submit' value='Add Friend'/></td>";
+                        echo "</form>";
+                }
+                    echo "</table>";
+            }  else {
+                    echo "<p>No friend suggestion!</p>";
+            }  
+      }
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,132 +77,6 @@
     <header class='page_header'>
         <h1>My Friend System</h1>
     </header>
-
-    <?php 
-        session_start();
-        require_once("functions/settings.php");
-        global $conn;
-        $id;
-        $pageno;
-        $no_records = 5;
-        $friendsuggestion = array(array());
-        array_pop($friendsuggestion);
-
-        echo "<p>" . $_SESSION['user'] . "</p>";
-
-        if (isset($_GET['pageno'])) {
-            $pageno = $_GET['pageno'];
-        } else {
-            $pageno = 1;
-        }
-
-        $offset = ($pageno -1) * $no_records;
-
-        $sql = "SELECT * FROM friends WHERE friend_email = '" . $_SESSION['user'] . "'; ";
-
-        if ($result = $conn->query($sql)) {
-            if ($result->num_rows === 1) {
-                $row = $result->fetch_assoc();
-                $id = $row['friend_id'];
-                $profile = $row['profile_name'];
-                $email = $row['friend_email'];
-                $num_of_friends = $row['num_of_friends'];      
-            }
-            $result->free();
-        }
-        if (isset($_POST['added_id'])) {
-            $added_id = $_POST['added_id'];
-            $check_if_exist = "SELECT * FROM myfriends 
-                                WHERE (friend_id1 = '" . $id . "' AND friend_id2 = '" . $added_id . "')
-                                    OR (friend_id1 = '" . $added_id . "' AND friend_id2 = '" . $id . "');";
-            if (!$result = $conn->query($check_if_exist)) {
-                echo "<p>Error: " . $conn->error .  "</p>";
-            } else {
-                if ($result->num_rows == 0) {
-                    $addfriendSQL = "INSERT INTO myfriends (friend_id1, friend_id2) 
-                             VALUES ('" . $id . "', '" . $added_id . "'), 
-                                    ('" . $added_id . "', '" . $id . "'); ";
-                    if (!$result = $conn->query($addfriendSQL)) {
-                        echo "<p>Error occurred: " . $conn->error . "</p>";
-                    }
-                    $num_of_friends = $num_of_friends + 1;
-                    $update_num_of_friends = "UPDATE friends 
-                                              SET num_of_friends = '" . $num_of_friends . "'
-                                              WHERE friend_id = '" . $id . "';";
-                    if (!$result = $conn->query($update_num_of_friends)) {
-                        echo "<p>Error: " . $conn->error . "</p>";
-                    } else {
-                        echo "<p>Updated number of friend!</p>";
-                    }
-                } else {
-                    echo "<p>Added not set!</p>";
-                }
-            } 
-        }
-
-        echo "<h1 class='page_header'>My Friend System</h1>";
-        echo "<p>Number of friends: " . $num_of_friends . "</p>";
-        $friends_suggested = "SELECT * FROM friends
-                                WHERE friend_id NOT IN (
-                                    SELECT friend_id1 FROM myfriends
-                                    WHERE (myfriends.friend_id1 = '" . $id . "' OR myfriends.friend_id2 = '" . $id . "')
-                                    ); ";           
-                                    
-        if ($result = $conn->query($friends_suggested)) {
-            if ($result->num_rows > 0 ) {
-                    $total_rows = $result->num_rows;
-                    $total_pages = ceil($total_rows / $no_records);
-
-                    $sql = "SELECT * FROM friends 
-                            WHERE friend_id NOT IN (
-                                SELECT friend_id1 FROM myfriends
-                                WHERE (myfriends.friend_id1 = '" . $id . "' OR myfriends.friend_id2 = '" . $id . "')
-                                ) LIMIT  $offset, $no_records ; ";
-
-                    $res_data = $conn->query($sql);
-                    print_r($conn->error);
-                    while ($row = $res_data->fetch_assoc()) {
-                        array_push($friendsuggestion, $row);
-                    }
-                }
-                $result->free();
-        } else {
-            echo "<p>Error: " . $conn->error . "</p>";
-        }
-
-        if (count($friendsuggestion) > 0) {
-           
-            for ($i = 0; $i < count($friendsuggestion); $i++) {
-                $mutualfriendSQL = "SELECT count(*) as num_of_mutuals FROM (
-                                        SELECT friend_id2, count(*) as occurences FROM myfriends
-                                        WHERE (friend_id1 = '" . $id . "' OR friend_id1 = '" . $friendsuggestion[$i]['friend_id'] . "')
-                                        GROUP BY friend_id2) src
-                                    WHERE occurences > 1 ;"; 
-                if (!$result = $conn->query($mutualfriendSQL)) {
-                    echo "<p>Error: " . $conn->error . "</p>";
-                } else {
-                    $row = $result->fetch_assoc();
-                    print_r($row);
-                    $friendsuggestion[$i]['num_of_mutuals'] = $row['num_of_mutuals'];
-                }                  
-                $result->free();
-            }
-            
-            echo "<table border='1px'>";
-                for ($i = 0; $i < count($friendsuggestion); $i++) {
-                    echo "<form action='friendadd.php' method='POST'>";
-                    echo "<input type='hidden' name='added_id' value='" . $friendsuggestion[$i]['friend_id'] . "'/>";
-                    echo "<tr><td>" . $friendsuggestion[$i]['profile_name'] . "</td>"
-                       . "<td>" . $friendsuggestion[$i]['num_of_mutuals'] . " mutual friend(s)" . "</td>"
-                       . "<td>" .  "<input type='submit' value='Add Friend'/></td>";
-                    echo "</form>";
-            }
-                echo "</table>";
-        }  else {
-                echo "<p>No friend suggestion!</p>";
-        }  
-         
-    ?>
     <ul class="pagination">
         <li><a href="?pageno=1">First</a></li>
         <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">

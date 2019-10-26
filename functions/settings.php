@@ -5,7 +5,6 @@
     $password = "root";
     $db = "assign2";
 
-    $conn;
     $conn = new mysqli($host, $user, $password, $db);
 
     if ($conn->connect_error) {

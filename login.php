@@ -38,6 +38,7 @@
 </body>
 <?php 
     require_once("functions/validation_functions.php");
+
     if (isset($_SESSION['user']) && ($_SESSION['user'] !== null)) {
         header("location: friendlist.php");
     } else {
@@ -49,7 +50,6 @@
 
             if ($err == "") {
                 if (password_check($_POST['password'], $_POST['email'])) {
-                    $_SESSION['login'] = "yes";
                     $_SESSION['user'] = $email;
                     header("location:friendlist.php");
                 } else {
