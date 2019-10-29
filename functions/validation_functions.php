@@ -18,12 +18,15 @@
         $email_pattern = '/^[A-Za-z0-9._]+@^[a-z]+.^[a-z]+$/';
         $profile_pattern = '/^[A-Za-z ]+/';
         $password_pattern = '/^[A-Za-z0-9]+$/';
+        $number_pattern = '/^[0-9]*$/';
         if ($type === "email") {
             return preg_match($email_pattern, $input);
         } else if ($type === "profile") {
             return preg_match($profile_pattern, $input);
         } else if ($type === "password") {
             return preg_match($password_pattern, $input);
+        } else if ($type === "number") {
+            return preg_match($number_pattern, $input);
         }
     }
     // check if email already registered
@@ -125,22 +128,30 @@
         global $conn;
         $friend_suggestion = array(array());
         array_pop($friend_suggestion);
+       
         $sql = "SELECT * FROM friends
-                WHERE friend_id NOT IN (
-                    SELECT friend_id1 FROM myfriends
-                    WHERE (myfriends.friend_id1 = '" . $user_id . "' OR myfriends.friend_id2 = '" . $user_id . "')
-                    ); ";            
+                WHERE 
+                    (NOT friend_id = '" . $user_id . "')
+                AND
+                    (friend_id NOT IN (
+                        SELECT friend_id1 FROM myfriends
+                        WHERE (myfriends.friend_id1 = '" . $user_id . "' OR myfriends.friend_id2 = '" . $user_id . "')
+                    ));";           
 
         if ($result = $conn->query($sql)) {
             if ($result->num_rows > 0) {
                 $total_rows = $result->num_rows;
                 $total_pages = ceil($total_rows / $limit);
 
-                $sql = "SELECT * FROM friends 
-                        WHERE friend_id NOT IN (
-                            SELECT friend_id1 FROM myfriends
-                            WHERE (myfriends.friend_id1 = '" . $user_id . "' OR myfriends.friend_id2 = '" . $user_id . "')
-                            ) LIMIT  $offset, $limit ; ";
+                $sql = "SELECT * FROM friends
+                        WHERE 
+                            (NOT friend_id = '" . $user_id . "')
+                        AND
+                            (friend_id NOT IN (
+                                SELECT friend_id1 FROM myfriends
+                                WHERE (myfriends.friend_id1 = '" . $user_id . "' OR myfriends.friend_id2 = '" . $user_id . "')
+                            ))
+                        LIMIT  $offset, $limit ; ";
 
                 if ($res_data = $conn->query($sql)) {
                     while ($row = $res_data->fetch_assoc()) {

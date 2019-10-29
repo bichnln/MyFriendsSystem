@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,22 +8,72 @@
     <meta name="description" content="My Friend System"/>
     <meta name="keywords" content="Assignmetn 2"/>
     <meta name="author" content="Le Ngoc Bich Nguyen"/>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 </head>
 <body>
-    <header class="page_header">
-        <h1>My Friend System</h1>
-    </header>
-    <hr>
+<div class='container'>
+    <div class = 'page-header'>
+        <h1 class="page_header">My Friend System</h1>
+    </div>
+
+    <div style = "<?php 
+            if (isset($_SESSION['user']) && $_SESSION['user'] !== null) 
+            {
+                echo 'display:block';
+            } else {
+                echo 'display:none';
+            }
+        ?>"> 
+        <ul class="nav nav-tabs justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="index.php">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="friendlist.php">Friend List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="friendadd.php">Add Friend</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="logout.php">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    <div style = " <?php 
+            if (!isset($_SESSION['user']))
+            {
+                echo 'display:block';
+            } else {
+                echo 'display:none';
+            }   
+    
+    ?>">
+            <ul class="nav nav-tabs justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="signup.php">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.php">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">About</a>
+                </li>
+            </ul>
+    
+    </div>
+    <br>
     <p>Name: Le Ngoc Bich Nguyen</p>
 	<p>Student ID: 101668056</p>
 	<p>Email: <a href="mailto:101668056@student.swin.edu.au? subject=subject text">101668056@student.swin.edu.au</a></p>
 	<p>I declare that this assignment is my individual work. I have not worked collaboratively nor have I copied from any other student's work or from any other source.</p>
-
-    <p><a href="signup.php">Sign Up</a></p>
-    <p><a href="login.php">Login</a></p>
-    <p><a href="about.php">About</a></p>
-
 
     <?php 
         require_once("functions/settings.php");
@@ -38,7 +91,7 @@
 
         // use connection object created in functions/settings.php
         // to create table friends
-        if ($conn->query($sql_create_table_friends) === TRUE) {
+        /*if ($conn->query($sql_create_table_friends) === TRUE) {
             echo "<p>Table created successfully!</p>";
         } else {
             echo "<p>Error creating table: " . $conn->error . "</p>";
@@ -50,7 +103,8 @@
             echo "<p>Table create successfully!</p>";
         } else {
             echo "<p>Error creating table: " . $conn->error . "</p>";
-        }
+        }*/
     ?>
+</div>
 </body>
 </html>

@@ -10,9 +10,7 @@
     } else {
         $profile = "";
     }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,33 +18,58 @@
     <meta name="description" content="My Friend System"/>
     <meta name="keywords" content="Assignmetn 2"/>
     <meta name="author" content="Le Ngoc Bich Nguyen"/>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 </head>
 <body>
-    <h1>My Friend System</h1>
-    <h2>Registration Page</h2>
+<div class='container'>
+    <div class = 'page-header'>
+        <h1>My Friend System</h1>
+    </div>
+
+    <ul class="nav nav-tabs justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Sign Up</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="login.php">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="about.php">About</a>
+        </li>
+    </ul>
 
     <fieldset>
         <legend>Registration Form</legend>
         <form id="signup_form" class="form" method="POST">
-            <label for="email">Email: </label>
-            <input type="text" name="email" maxlength="50" value="<?= $email; ?>" /> <br>
+            <div class='form-group'>
+                <label for="email">Email: </label>
+                <input type="text" class="form-control" name="email" maxlength="50" value="<?= $email; ?>" /> 
+            </div>
 
-            <label for="profile">Profile Name:</label>
-            <input type="text" name="profile" maxlength="30" value="<?= $profile ?>"/> <br>
+            <div class='form-group'>
+                <label for="profile">Profile Name:</label>
+                <input type="text" class="form-control" name="profile" maxlength="30" value="<?= $profile ?>"/> 
+            </div>
 
-            <label for="password">Password:</label>
-            <input type="password" name="password" maxlength="20"/> <br>
+            <div class='form-group'>
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" name="password" maxlength="20"/>
+            </div>
 
-            <label for="confirm_password">Confirm Password:</label>
-            <input type="password" name="confirm_password" maxlength="20"/> <br>
+            <div class='form-group'>
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" class="form-control" name="confirm_password" maxlength="20"/>
+            </div>
 
-            <button type="submit" value="register" class="form_btn">Register</button>
-            <button type="reset" value="clear" class="form_button">Clear</button>
+            <button type="submit" value="register" class="btn btn-outline-primary">Register</button>
+            <button type="reset" value="clear" class="btn btn-outline-secondary">Clear</button>
         </form>
     </fieldset>
-
-    <p><a href="index.php">Home</a></p>
+    <br>
     
     <?php 
         require_once("functions/validation_functions.php");
@@ -79,7 +102,6 @@
             if (!($_POST['confirm_password'] === $_POST['password'])) {
                 $err = $err . "<p>Confirm Password and Password do not match!</p>";
             }
-            
             if ($err == "") {
                 $profile = $_POST['profile'];
                 $email = $_POST['email'];
@@ -100,17 +122,17 @@
                 }
                 
                 $conn->close();
-
                 $_SESSION['login'] = "yes";
                 $_SESSION['user'] = $email;
                 header("location:friendadd.php");
             } else {
-                echo "<p>$err</p>";
+                echo "<div class='alert alert-warning' role='alert'>"
+                     . $err 
+                     . "</div>";
             }
         
-        } else {
-            echo "<p>Error!</p>";
         } 
     ?>
+</div>
 </body>
 </html>
