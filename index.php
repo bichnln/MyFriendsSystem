@@ -26,8 +26,8 @@
             }
         ?>"> 
         <ul class="nav nav-tabs justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="index.php">Home</a>
+            <li class="nav-item active">
+                <a class="nav-link active" href="index.php">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="friendlist.php">Friend List</a>
@@ -36,7 +36,7 @@
                 <a class="nav-link" href="friendadd.php">Add Friend</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="#">About</a>
+                <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">Logout</a>
@@ -91,19 +91,18 @@
 
         // use connection object created in functions/settings.php
         // to create table friends
-        /*if ($conn->query($sql_create_table_friends) === TRUE) {
-            echo "<p>Table created successfully!</p>";
-        } else {
+        if ($conn->query($sql_create_table_friends) === FALSE) {
+            
+        
             echo "<p>Error creating table: " . $conn->error . "</p>";
         }
 
         // use connection object created in functions/settings.php
         // to create table my_friends
-        if ($conn->query($sql_create_table_myfriends) === TRUE) {
-            echo "<p>Table create successfully!</p>";
-        } else {
+        if ($conn->query($sql_create_table_myfriends) === FALSE) {
+            
             echo "<p>Error creating table: " . $conn->error . "</p>";
-        }*/
+        }
     ?>
 </div>
 </body>

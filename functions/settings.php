@@ -2,7 +2,7 @@
     // TODO: change to feenix!
     $host = "localhost";
     $user = "root";
-    $password = "root";
+    $password = "";
     $db = "assign2";
 
     $conn = new mysqli($host, $user, $password, $db);
