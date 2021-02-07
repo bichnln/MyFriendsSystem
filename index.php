@@ -1,5 +1,10 @@
-<?php
+<?php 
     session_start();
+    if (isset($_POST['email'])) {
+        $email = $_POST['email'];
+    } else {
+        $email = "";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,101 +14,90 @@
     <meta name="keywords" content="Assignmetn 2"/>
     <meta name="author" content="Le Ngoc Bich Nguyen"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+
+    
 </head>
 <body>
-<div class='container'>
+<div >
     <div class = 'page-header'>
         <h1 class="page_header">My Friend System</h1>
     </div>
 
-    <div style = "<?php 
-            if (isset($_SESSION['user']) && $_SESSION['user'] !== null) 
-            {
-                echo 'display:block';
-            } else {
-                echo 'display:none';
-            }
-        ?>"> 
-        <ul class="nav nav-tabs justify-content-end">
-            <li class="nav-item active">
-                <a class="nav-link active" href="index.php">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="friendlist.php">Friend List</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="friendadd.php">Add Friend</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="logout.php">Logout</a>
-            </li>
-        </ul>
-    </div>
+    <ul class="nav nav-tabs justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="signup.php">Sign Up</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="about.php">About</a>
+        </li>
+    </ul>
 
-    <div style = " <?php 
-            if (!isset($_SESSION['user']))
-            {
-                echo 'display:block';
-            } else {
-                echo 'display:none';
-            }   
-    
-    ?>">
-            <ul class="nav nav-tabs justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.php">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="signup.php">Sign Up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login.php">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-            </ul>
-    
-    </div>
-    <br>
-    <p>Name: Le Ngoc Bich Nguyen</p>
-	<p>Student ID: 101668056</p>
-	<p>Email: <a href="mailto:101668056@student.swin.edu.au? subject=subject text">101668056@student.swin.edu.au</a></p>
-	<p>I declare that this assignment is my individual work. I have not worked collaboratively nor have I copied from any other student's work or from any other source.</p>
+
+        <div class="login-form-container">
+        
+        <!-- <legend>Login Form</legend> -->
+        <form id="login_form" class="form" action="login.php" method="POST">
+        <h2>Login</h2>    
+        <div class='form-group'>
+            <label for="email">Email </label>
+            <input type="text" class="form-control" name="email" maxlength="50" value="<?= $email; ?>"
+            placeholder="Email"/> 
+        </div>
+
+        <div class='form-group'>
+            <label for="password">Password </label>
+            <input type="password" class="form-control" name="password" maxlength="20"/>
+        </div>
+        <div class="btn-wrapper">
+            <button type="submit" value="login" class="btn btn-outline-primary">Login</button>
+            <button type="reset" value="clear" class="btn btn-outline-secondary">Clear</button>
+</div>
+        </form>
+        <img src="3457741.jpg" alt="formimg" />
+        </div>
+
+
+        <br>
 
     <?php 
-        require_once("functions/settings.php");
-        $sql_create_table_friends = "CREATE TABLE IF NOT EXISTS friends(
-                                            friend_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-                                            friend_email VARCHAR(50) NOT NULL,
-                                            password VARCHAR(20) NOT NULL,
-                                            profile_name VARCHAR(30) NOT NULL,
-                                            date_started DATE NOT NULL,
-                                            num_of_friends INT UNSIGNED);";
+    require_once("functions/validation_functions.php");
 
-        $sql_create_table_myfriends = "CREATE TABLE IF NOT EXISTS myfriends(
-                                            friend_id1 INT NOT NULL,
-                                            friend_id2 INT NOT NULL);";
-
-        // use connection object created in functions/settings.php
-        // to create table friends
-        if ($conn->query($sql_create_table_friends) === FALSE) {
-            
-        
-            echo "<p>Error creating table: " . $conn->error . "</p>";
+    if (isset($_SESSION['user']) && ($_SESSION['user'] !== null)) {
+        header("location: friendlist.php");
+    } else {
+        $err = "";
+        if ((isset($_POST['email']))  && (isset($_POST['password']))) {
+            if (empty_check($_POST['email'])) {
+                $err = $err . "Email is empty!";
+            }
+            if ($err == "") {
+                if (password_check($_POST['password'], $_POST['email'])) {
+                    $_SESSION['user'] = $email;
+                    header("location:friendlist.php");
+                } else {
+                    echo "<div class='alert alert-danger' role='alert'>
+                            Email does not exist or wrong password!
+                        </div>";
+                }
+            } else {
+                echo "<div class='alert alert-warning' role='alert'>"
+                . $err 
+                . "</div>";
+            }
         }
-
-        // use connection object created in functions/settings.php
-        // to create table my_friends
-        if ($conn->query($sql_create_table_myfriends) === FALSE) {
-            
-            echo "<p>Error creating table: " . $conn->error . "</p>";
-        }
+    } 
     ?>
+
 </div>
+
+
 </body>
+
 </html>

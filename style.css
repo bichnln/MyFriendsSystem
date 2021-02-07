@@ -1,0 +1,105 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+body {
+    background-image: url("99790.jpg");
+    
+    background-size: 1920px;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+
+
+.login-form-container {
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+    
+    width: 900px;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+    margin: 0 auto;
+}
+
+div.login-form-container img {
+    width: 50%;
+    border-radius: 5px;
+    
+}
+div.login-form-container form {
+    width: 50%;
+    display: block;
+    padding: 0 20px;
+}
+
+div.login-form-container form h2 {
+    line-height: 3em;
+    font-size: 2.5em;
+}
+
+div.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2%;
+    padding: 1%;
+    margin-bottom: 2%;
+}
+
+.form-group label{
+    line-height: 1.5em;
+}
+
+.form-group input {
+    border: none;
+    border-bottom: 1px solid gray;
+    width: 80%;
+    line-height: 2em;
+    
+    
+}
+
+.form-group label {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+.btn-wrapper {
+       
+}
+
+button {
+    cursor: pointer;
+}
+
+button[type=submit] {
+    border-radius: 3px;
+    border: 1px solid transparent;
+    font-size: 100%;
+    color: white;
+    background-color:  #0074d9;
+    padding: 10px;
+} 
+
+button[type=submit]:hover {
+    background-color: #0365bb;
+}
+
+button[type=reset] {
+    border-radius: 3px;
+    border: 1px solid #ff4136;
+    font-size: 100%;
+    color: #ff4136;
+    background-color: transparent;
+    padding: 10px;
+}  
+
+button[type=reset]:hover {
+    background-color: #ff4136;
+    color: white;
+}
