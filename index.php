@@ -63,17 +63,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="login.php">Login</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
-                </li>
+                </li> -->
             </ul>
     
     </div>
     <br>
-    <p>Name: Le Ngoc Bich Nguyen</p>
-	<p>Student ID: 101668056</p>
-	<p>Email: <a href="mailto:101668056@student.swin.edu.au? subject=subject text">101668056@student.swin.edu.au</a></p>
-	<p>I declare that this assignment is my individual work. I have not worked collaboratively nor have I copied from any other student's work or from any other source.</p>
+    <h2>Welcome to My Friend System</h2>
+
 
     <?php 
         require_once("functions/settings.php");

@@ -34,9 +34,9 @@
         <li class="nav-item">
             <a class="nav-link active" href="#">Add Friend</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="about.php">About</a>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Logout</a>
         </li>

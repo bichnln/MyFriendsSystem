@@ -72,11 +72,7 @@
     
     </div>
 
-    <ul>
-        <li>I have attempted to complete all the tasks listed in the assignment description.</li>
-        <li>I have added a feature that allows user to enter his/her desired number of records per page in friend suggestions page. If user enter an invalid number, the system will use the previously entered valid number. If the first input is not valid, the system will use the default number - 5. </li>
-        <li></li>
-    </ul>
+            
 
 </div>
 </body>
