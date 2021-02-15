@@ -17,7 +17,7 @@
     <meta name="keywords" content="Assignmetn 2"/>
     <meta name="author" content="Le Ngoc Bich Nguyen"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/> <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>   
 <div class='container'>
@@ -25,12 +25,12 @@
         <h1>My Friend System</h1>
     </div>
 
-    <br>
+   
 
-    <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item">
+    <ul class="nav">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="index.php">Home</a>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a class="nav-link active" href="#">Friend List</a>
         </li>
@@ -61,13 +61,14 @@
             $unfriend_msg = unfriend($id, $deleted_id);
         } 
 
-        echo "<h2>$profile_name</h2>";
+        echo "<div class='profile-container'>
+                <h2>$profile_name</h2>";
         
         $friendlist = get_friendlist($id);
         $no_friends = count($friendlist);
         if ($no_friends > 0) 
         {
-            echo "<p class='font-weight-normal'>Total number of friends: " . $no_friends . "</p>";
+            echo "<p class='font-weight-normal'>Total number of friends: " . $no_friends . "</p></div>";
             echo "<br>";
             echo "<h4 >Friend List</h4>";
 
@@ -79,7 +80,7 @@
                 echo "<input type='hidden' name='deleted_id' value='" . $friendlist[$i]['ID'] . "'/>";
                 echo "<tr><td>" . $friendlist[$i]['ID'] . "</td>" 
                     . "<td>" . $friendlist[$i]['ProfileName'] . "</td>"
-                    . "<td>" . "<input type='submit' class='btn btn-outline-dark' name='deleted' value = 'Unfriend'/></td>";
+                    . "<td>" . "<input type='submit' class='btn btn-danger' name='deleted' value = 'Unfriend'/></td>";
                 echo "</form>";
             }
             echo "</table>";
@@ -91,9 +92,10 @@
              </div>";
         }
     ?>
-
-    <a class="btn btn-primary" href="friendadd.php" role="button">Add Friends</a>
-    <a class="btn btn-dark" href="logout.php" role="button">Logout</a>
+    <!-- <div class="btn-wrapper">
+        <a class="btn btn-primary" href="friendadd.php" role="button">Add Friends</a>
+        <a class="btn btn-dark" href="logout.php" role="button">Logout</a>
+    </div> -->
 
 </div>
 </body>

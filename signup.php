@@ -19,11 +19,11 @@
     <meta name="keywords" content="Assignmetn 2"/>
     <meta name="author" content="Le Ngoc Bich Nguyen"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
 <div class='container'>
-    <div class = 'page-header'>
+    <!-- <div class = 'page-header'>
         <h1>My Friend System</h1>
     </div>
 
@@ -37,38 +37,40 @@
         <li class="nav-item">
             <a class="nav-link " href="login.php">Login</a>
         </li>
-        <!-- <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="about.php">About</a>
-        </li> -->
-    </ul>
+        </li>
+    </ul> -->
 
-    <fieldset>
-        <legend>Registration Form</legend>
+    <div class="form-container">
+        <div class="form-header"><h1>Registration Form</h1></div>
         <form id="signup_form" class="form" method="POST">
             <div class='form-group'>
-                <label for="email">Email: </label>
-                <input type="text" class="form-control" name="email" maxlength="50" value="<?= $email; ?>" /> 
+                
+                <input type="text" class="form-control" name="email" maxlength="50" value="<?= $email; ?>" placeholder="Email" required/> 
             </div>
 
             <div class='form-group'>
-                <label for="profile">Profile Name:</label>
-                <input type="text" class="form-control" name="profile" maxlength="30" value="<?= $profile ?>"/> 
+                
+                <input type="text" class="form-control" name="profile" maxlength="30" value="<?= $profile ?>" placeholder="Profile Name" required/> 
             </div>
 
             <div class='form-group'>
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" name="password" maxlength="20"/>
+                
+                <input type="password" class="form-control" name="password" maxlength="20" placeholder="password" required/>
             </div>
 
             <div class='form-group'>
-                <label for="confirm_password">Confirm Password:</label>
-                <input type="password" class="form-control" name="confirm_password" maxlength="20"/>
+               
+                <input type="password" class="form-control" name="confirm_password" maxlength="20" placeholder="Confirm password" required/>
             </div>
 
             <button type="submit" value="register" class="btn btn-outline-primary">Register</button>
             <button type="reset" value="clear" class="btn btn-outline-secondary">Clear</button>
         </form>
-    </fieldset>
+
+        <div class="signup-link"><a href="index.php">Already a member? Click here to sign in</a>
+
     <br>
     
     <?php 

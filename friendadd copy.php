@@ -12,8 +12,9 @@
     <meta name="keywords" content="Assignmetn 2"/>
     <meta name="author" content="Le Ngoc Bich Nguyen"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+
+   
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 
 </head>
 <body>
@@ -24,10 +25,10 @@
         <h1>My Friend System</h1>
     </div>
 
-    <ul class="nav">
-        <!-- <li class="nav-item">
+    <ul class="nav nav-tabs justify-content-end">
+        <li class="nav-item">
             <a class="nav-link" href="index.php">Home</a>
-        </li> -->
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="friendlist.php">Friend List</a>
         </li>
@@ -94,11 +95,8 @@
             } 
         } 
 
-        
-        echo "<div class='profile-container'>
-                <h2>$profile_name</h2>
-                <p class='font-weight-normal'>Total number of added friends: " . $no_friends . "</p>
-            </div>";
+        echo "<h2>$profile_name</h2>";
+        echo "<p class='font-weight-normal'>Total number of added friends: " . $no_friends . "</p>";
         
 
         $no_friends = $user_profile['num_of_friends'];
@@ -110,7 +108,7 @@
         {
             echo "<br>";
             echo "<h4 >Friend Suggestions</h4>";
-            echo "<form action='friendadd.php' method='GET' class='friendsuggestion-form'>
+            echo "<form action='friendadd.php' method='GET'>
                     <div class='input-group mb-3'>
                         <input type='text' class='form-control' value='" . $no_records . "' aria-describedby='basic-addon2' name='no_records'>
                         <div class='input-group-append'>

@@ -1,0 +1,271 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+*:focus {
+    outline: 0px solid transparent;
+}
+body {
+  background-image: url("digi.jpeg");
+
+  background-size: 1920px;
+  background-repeat: no-repeat;
+  text-align: center;
+  position: relative;
+}
+
+.page-header {
+  padding: 20px;
+}
+
+.page-header h1 {
+  background: -webkit-linear-gradient(white, cyan, teal);
+  -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  
+
+}
+
+ul.nav {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left,cyan, teal ,transparent);
+}
+
+.nav-item .nav-link {
+  color: white; 
+  border-top: 1px solid transparent;
+  border-image-slice: 1;
+
+}
+.nav-item .nav-link:hover {
+  color: white; 
+  
+  background-color:rgb(108, 197, 248);
+  animation: backgroundChange 0.5s;
+  font-style: italic;
+}
+
+
+.nav-item .nav-link.active {
+ 
+  border-top: 1px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left, transparent, rgb(167, 7, 7), red, rgb(167, 7, 7),  transparent);
+  
+
+ 
+    
+}
+
+
+.form-container {
+  background-color: rgba(0,0,0,0.7);
+  animation-name: fadeIn;
+  animation-duration: 2.5s;
+  border-radius: 7px;
+  border: none;
+  width: 650px;
+  height: 600px;
+  margin: 120px auto auto auto;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+  
+}
+
+form {
+  display: block;
+  padding: 0 30px;
+  margin: 20px auto;
+  
+}
+
+.form-header {
+     height: 20%;
+     width: 100%;
+     text-align: center;
+     padding-top: 50px;
+}
+
+.form-header h1 {
+   
+    
+    
+    line-height: 2em;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.form-group {
+    display: block;
+    height: 4em;
+    position: relative;
+    margin: 0.5em auto;
+}
+
+.form-group i {
+    color: white;
+}
+
+.form-group input {
+  border: none;
+  border-bottom: 1px solid gray;
+  background-color: transparent;
+  opacity: 0.5;
+  color: white;
+  width: 80%;
+  line-height: 2em;
+  position: absolute;
+  height: 4em;
+    top: 50%;
+    margin-top: -2em;
+    display: block;
+    padding: 10px;
+    left: 50%;
+    margin-left: -40%;
+
+}
+
+.form-group input:focus {
+    opacity:  1;
+}
+
+
+
+.form-group label {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.btn-wrapper {
+}
+
+button {
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 7px;
+  width: 20%;
+  margin-top: 20px;
+  font-size: 100%;
+}
+
+button[type="submit"] {
+  
+  border: 1px solid rgb(108, 197, 248);
+  
+  color: white;
+  background-color: rgb(108, 197, 248);
+  
+  
+}
+
+button[type="submit"]:hover {
+  
+  background-color: #0365bb;
+}
+
+button[type="reset"] {
+  
+  border: 1px solid #eb473e;
+  
+  color: #eb473e;
+  background-color: transparent;
+ 
+}
+
+
+
+button[type="reset"]:hover {
+  background-color: #eb473e;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #eb473e;
+  color: white;
+}
+
+.btn-danger  {
+  
+  border: 1px solid #eb473e;
+  
+  color: #eb473e;
+  background-color: transparent;
+ 
+}
+
+.btn-wrapper {
+  text-align: left;
+  margin-top: 30px;
+}
+.singup-link {
+    
+}
+.signup-link a {
+    text-decoration: none;
+    height: 2em;
+    
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: lightgray;
+}
+
+.signup-link a:hover {
+    color: white;
+}
+
+.alert {
+    color: red;
+}
+
+.profile-container {
+  text-align: left;
+  width: 100%;
+  color: white;
+}
+
+.profile-container h2 {
+  
+}
+
+h4 {
+  color: white;
+}
+  
+
+.friendsuggestion-form {
+  width: 100%;
+  padding: 0;
+}
+
+.table.table-hover.table-bordered {
+  background-color: rgba(0,0,0,0.5);
+  color: darkgray;
+  
+}
+
+.table.table-hover.table-bordered tr:hover {
+  background-color: rgba(0,0,0,0.3);
+  color: white;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes backgroundChange {
+  from {
+    background: transparent;
+  }
+  to {
+    background:rgb(108, 197, 248);
+  }
+}
