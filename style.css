@@ -252,6 +252,66 @@ h4 {
   color: white;
 }
 
+.table td {
+  vertical-align: middle;
+}
+
+.friendsuggestion-form input[type="text"] {
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left, teal, cyan, rgb(167,7,7));
+  
+  
+}
+
+.friendsuggestion-form input[type="text"]:focus {
+  outline: 0px solid transparent;
+  
+  
+}
+
+.input-group-append .input-group-text#basic-addon2 {
+  background-color: transparent;
+  color: white;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left, rgb(167,7,7), teal); 
+  
+  
+  
+  background-color: rgba(0,0,0,0.5);
+  
+
+}
+
+
+
+.pagination-text {
+  color: white;
+}
+
+.page-item.disabled .page-link{
+  border: none;
+  background-color: transparent;
+}
+
+.page-item .page-link{
+  border: none;
+  background-color: transparent;
+  color: cyan;
+}
+
+.page-item .page-link:focus{
+  outline: 0px solid transparent;
+}
+
+
+.page-item .page-link:hover{
+  border: none;
+  background-color: transparent;
+  color:rgb(167, 7, 7);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

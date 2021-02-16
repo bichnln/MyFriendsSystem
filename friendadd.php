@@ -146,7 +146,7 @@
     ?>
 
     <div style=" <?php if($total_pages <= 1) {echo 'display:none';} ?>">
-    <p>Total pages: <?php echo $total_pages ?> </p>
+    <p class="pagination-text">Total pages: <?php echo $total_pages ?> </p>
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
             <!-- <li><a href="?pageno=1">1</a></li> -->
